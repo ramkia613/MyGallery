@@ -7,8 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import com.ramki.mygallery.navigation.AppNavGraph
 import com.ramki.mygallery.ui.theme.MyGalleryTheme
-import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

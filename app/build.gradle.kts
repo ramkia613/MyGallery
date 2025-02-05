@@ -55,6 +55,8 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.video)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

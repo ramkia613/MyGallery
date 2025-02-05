@@ -16,16 +16,24 @@ fun AppNavGraph(
     ) {
         composable<AppDestination.Gallery> {
             GalleryScreen(
-                onPermission = {
-                    navController.navigate(AppDestination.Permission)
+                navigateToPermission = {
+                    navController.navigate(AppDestination.Permission) {
+                        popUpTo(AppDestination.Gallery) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
 
         composable<AppDestination.Permission> {
             PermissionScreen(
-                onBack = {
-                    navController.popBackStack()
+                navigateToGallery = {
+                    navController.navigate(AppDestination.Gallery) {
+                        popUpTo(AppDestination.Permission) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }

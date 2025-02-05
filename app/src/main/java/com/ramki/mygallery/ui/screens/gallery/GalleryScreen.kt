@@ -2,32 +2,59 @@
 
 package com.ramki.mygallery.ui.screens.gallery
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.ramki.mygallery.R
+import com.ramki.mygallery.utils.PermissionHandler
 
 @Composable
 fun GalleryScreen(
-    onPermission: () -> Unit
+    navigateToPermission: () -> Unit
 ) {
+    val context = LocalContext.current
+    val permissionHandler = remember { PermissionHandler(context) }
 
-    GalleryContent(
-        onPermission = onPermission
+    val permissionLaunch = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { permissions ->
+            val granted = permissions.all { it.value }
+            if (granted) {
+                //TODO: Get data from View Model
+            } else {
+                navigateToPermission()
+            }
+        }
     )
+
+    LaunchedEffect(Unit) {
+        if (!permissionHandler.hasStoragePermission()) {
+            permissionLaunch.launch(permissionHandler.getRequiredPermissions())
+        } else {
+            //TODO: Get data from View Model
+        }
+    }
+
+    GalleryContent()
 }
 
 @Composable
-private fun GalleryContent(
-    onPermission: () -> Unit
-) {
+private fun GalleryContent() {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -36,28 +63,25 @@ private fun GalleryContent(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Gallery")
+                    Text(text = stringResource(R.string.gallery_title))
                 },
                 scrollBehavior = scrollBehavior,
             )
         }
     ) { innerPadding ->
 
-        Button(
-            onClick = onPermission,
+        LazyColumn(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            Text(text = "Get Permission")
+            //TODO: Add Albums list
         }
-
     }
 }
 
 @Preview
 @Composable
 private fun GalleryScreenPreview() {
-    GalleryContent() {
-
-    }
+    GalleryContent()
 }

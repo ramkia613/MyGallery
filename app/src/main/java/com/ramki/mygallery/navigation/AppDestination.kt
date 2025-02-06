@@ -1,5 +1,6 @@
 package com.ramki.mygallery.navigation
 
+import com.ramki.mygallery.data.model.MediaType
 import kotlinx.serialization.Serializable
 
 sealed interface AppDestination {
@@ -11,5 +12,9 @@ sealed interface AppDestination {
     data object Permission : AppDestination
 
     @Serializable
-    data object AlbumDetail : AppDestination
+    data class AlbumDetail(
+        val name: String,
+        val type: MediaType,
+        val isContainsAll: Boolean
+    ) : AppDestination
 }

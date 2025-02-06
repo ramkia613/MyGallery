@@ -1,9 +1,8 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.ramki.mygallery.ui.screens.gallery
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -49,7 +48,8 @@ import com.ramki.mygallery.utils.PermissionHandler
 @Composable
 fun GalleryScreen(
     galleryViewModel: GalleryViewModel = hiltViewModel(),
-    navigateToPermission: () -> Unit
+    navigateToPermission: () -> Unit,
+    navigateToAlbum: (Album) -> Unit
 ) {
     val albums = galleryViewModel.albums.collectAsStateWithLifecycle().value
     val context = LocalContext.current
@@ -61,7 +61,6 @@ fun GalleryScreen(
         onResult = { permissions ->
             val granted = permissions.all { it.value }
             if (granted) {
-                //TODO: Get data from View Model
                 galleryViewModel.getAlbums()
             } else {
                 navigateToPermission()
@@ -73,21 +72,23 @@ fun GalleryScreen(
         if (!permissionHandler.hasStoragePermission()) {
             permissionLaunch.launch(permissionHandler.getRequiredPermissions())
         } else {
-            //TODO: Get data from View Model
             galleryViewModel.getAlbums()
         }
     }
 
     GalleryContent(
-        albums,
-        isGridView
+        albums = albums,
+        isGridView = isGridView,
+        onItemClick = navigateToAlbum
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun GalleryContent(
     albums: List<Album>,
-    isGridView: MutableState<Boolean>
+    isGridView: MutableState<Boolean>,
+    onItemClick: (Album) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
@@ -102,7 +103,6 @@ private fun GalleryContent(
                     IconButton(
                         onClick = { isGridView.value = !isGridView.value }
                     ) {
-
                         Icon(
                             painter = if (isGridView.value) {
                                 painterResource(R.drawable.ic_list_view)
@@ -119,15 +119,19 @@ private fun GalleryContent(
     ) { innerPadding ->
 
         if (isGridView.value) {
-            AlbumGrid(innerPadding, albums)
+            AlbumGrid(innerPadding, albums, onItemClick)
         } else {
-            AlbumList(innerPadding, albums)
+            AlbumList(innerPadding, albums, onItemClick)
         }
     }
 }
 
 @Composable
-fun AlbumGrid(innerPadding: PaddingValues, albums: List<Album>) {
+fun AlbumGrid(
+    innerPadding: PaddingValues,
+    albums: List<Album>,
+    onItemClick: (Album) -> Unit
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -139,15 +143,20 @@ fun AlbumGrid(innerPadding: PaddingValues, albums: List<Album>) {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(albums) {
-            AlbumGridItem(it)
+            AlbumGridItem(it, onItemClick)
             Spacer(modifier = Modifier.size(8.dp))
         }
     }
 }
 
 @Composable
-fun AlbumGridItem(album: Album) {
-    Column {
+fun AlbumGridItem(
+    album: Album,
+    onItemClick: (Album) -> Unit
+) {
+    Column(
+        modifier = Modifier.clickable { onItemClick(album) },
+    ) {
         GalleryImage(
             modifier = Modifier
                 .fillMaxSize(),
@@ -161,7 +170,11 @@ fun AlbumGridItem(album: Album) {
 }
 
 @Composable
-fun AlbumList(innerPadding: PaddingValues, albums: List<Album>) {
+fun AlbumList(
+    innerPadding: PaddingValues,
+    albums: List<Album>,
+    onItemClick: (Album) -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -169,17 +182,21 @@ fun AlbumList(innerPadding: PaddingValues, albums: List<Album>) {
             .padding(innerPadding)
     ) {
         items(albums, key = { it.name }) {
-            AlbumListItem(it)
+            AlbumListItem(it, onItemClick)
             Spacer(modifier = Modifier.size(8.dp))
         }
     }
 }
 
 @Composable
-fun AlbumListItem(album: Album) {
+fun AlbumListItem(
+    album: Album,
+    onItemClick: (Album) -> Unit
+) {
     Row(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .clickable { onItemClick(album) },
         verticalAlignment = Alignment.CenterVertically
     ) {
         GalleryImage(
@@ -220,6 +237,7 @@ private fun GalleryScreenPreview() {
                 type = MediaType.IMAGE
             )
         ),
-        isGridView = isGridView
+        isGridView = isGridView,
+        onItemClick = {}
     )
 }

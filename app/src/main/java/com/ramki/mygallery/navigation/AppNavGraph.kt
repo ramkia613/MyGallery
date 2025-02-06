@@ -3,6 +3,7 @@ package com.ramki.mygallery.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
+import com.ramki.mygallery.ui.screens.albumdetail.AlbumDetailScreen
 import com.ramki.mygallery.ui.screens.gallery.GalleryScreen
 import com.ramki.mygallery.ui.screens.permission.PermissionScreen
 
@@ -22,6 +23,15 @@ fun AppNavGraph(
                             inclusive = true
                         }
                     }
+                },
+                navigateToAlbum = {
+                    navController.navigate(
+                        AppDestination.AlbumDetail(
+                            name = it.name,
+                            type = it.type,
+                            isContainsAll = it.isContainsAll
+                        )
+                    )
                 }
             )
         }
@@ -38,5 +48,12 @@ fun AppNavGraph(
             )
         }
 
+        composable<AppDestination.AlbumDetail> {
+            AlbumDetailScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }

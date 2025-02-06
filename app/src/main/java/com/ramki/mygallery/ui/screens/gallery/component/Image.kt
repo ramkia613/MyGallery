@@ -2,7 +2,6 @@ package com.ramki.mygallery.ui.screens.gallery.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil3.ImageLoader
 import coil3.compose.AsyncImage
+import coil3.request.CachePolicy
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.video.VideoFrameDecoder
@@ -29,6 +29,7 @@ fun GalleryImage(modifier: Modifier = Modifier, path: String) {
 
     val request = ImageRequest.Builder(context)
         .data(path)
+        .memoryCachePolicy(CachePolicy.ENABLED)
         .crossfade(true)
         .build()
 
@@ -37,7 +38,6 @@ fun GalleryImage(modifier: Modifier = Modifier, path: String) {
         imageLoader = imageLoader,
         contentDescription = null,
         modifier = modifier
-            .fillMaxSize()
             .aspectRatio(1f)
             .clip(RoundedCornerShape(16.dp))
             .background(Color.Gray),

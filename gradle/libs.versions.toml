@@ -10,7 +10,7 @@ activityCompose = "1.10.0"
 navigationCompose = "2.8.5"
 composeBom = "2025.01.01"
 coil = "3.1.0"
-coil-video = "3.1.0"
+paging = "3.3.5"
 ksp = "2.0.10-1.0.24"
 hilt = "2.52"
 androidx-hilt = "1.2.0"
@@ -37,7 +37,11 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
-coil-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil-video" }
+coil-video = { module = "io.coil-kt.coil3:coil-video", version.ref = "coil" }
+
+paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
+paging = { module = "androidx.paging:paging-compose", version.ref = "paging" }
+paging-test = { module = "androidx.paging:paging-common", version.ref = "paging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -158,13 +158,15 @@ class MediaLocalDataSource @Inject constructor(private val context: Context) {
                 items[items.size - 2]
             }
             val date = getLong(getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED))
+            val duration = getLong(getColumnIndexOrThrow(MediaStore.Video.Media.DURATION))
             MediaFile(
                 id = id,
                 name = name,
                 folderName = folderName,
                 path = path,
                 dateAdded = date,
-                type = type
+                type = type,
+                duration = duration
             )
         }
     }

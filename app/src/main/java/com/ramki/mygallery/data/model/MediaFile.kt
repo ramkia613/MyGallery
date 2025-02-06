@@ -6,7 +6,8 @@ data class MediaFile(
     val name: String,
     val folderName: String,
     val dateAdded: Long,
-    val type: MediaType
+    val type: MediaType,
+    val duration: Long = 0L
 )
 
 enum class MediaType {

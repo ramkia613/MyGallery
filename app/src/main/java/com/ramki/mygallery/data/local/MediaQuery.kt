@@ -15,6 +15,7 @@ object MediaQuery {
         MediaStore.Files.FileColumns.DATE_ADDED,
         MediaStore.Files.FileColumns.SIZE,
         MediaStore.Files.FileColumns.MIME_TYPE,
+        MediaStore.Files.FileColumns.DURATION
     )
 
     object Selection {

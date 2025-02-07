@@ -24,3 +24,8 @@
 
   `$ ./gradlew connectedAndroidTest`
 
+### Proof Of Work
+<img src="https://github.com/ramkia613/MyGallery/blob/main/app/sampledata/gallery_grid.png" width=200 /> <img src="https://github.com/ramkia613/MyGallery/blob/main/app/sampledata/gallery_list.png" width=200 />
+<img src="https://github.com/ramkia613/MyGallery/blob/main/app/sampledata/image_album.png" width=200 />
+<img src="https://github.com/ramkia613/MyGallery/blob/main/app/sampledata/all_videos.png" width=200 />
+

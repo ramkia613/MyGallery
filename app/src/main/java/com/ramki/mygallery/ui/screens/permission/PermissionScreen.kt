@@ -49,7 +49,7 @@ fun PermissionScreen(
 }
 
 @Composable
-private fun PermissionContent(
+fun PermissionContent(
     onOpenSettings: () -> Unit
 ) {
 

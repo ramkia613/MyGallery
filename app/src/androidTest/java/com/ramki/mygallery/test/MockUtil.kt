@@ -18,7 +18,7 @@ object MockUtil {
     )
 
     val albums = listOf(
-        album.copy(isContainsAll = true),
+        album.copy(name = "name1", mediaCount = 15, isContainsAll = true),
         album
     )
 
@@ -39,7 +39,12 @@ object MockUtil {
     )
 
     val mediaGroup = MediaGroup(
-        data = "data",
+        day = "Today",
         mediaFiles = listOf(mediaFile)
+    )
+
+    val mediaGroups = listOf(
+        mediaGroup,
+        mediaGroup.copy("Yesterday")
     )
 }

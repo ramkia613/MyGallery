@@ -85,7 +85,7 @@ fun GalleryScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun GalleryContent(
+fun GalleryContent(
     albums: List<Album>,
     isGridView: MutableState<Boolean>,
     onItemClick: (Album) -> Unit

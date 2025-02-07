@@ -39,7 +39,7 @@ object MockUtil {
     )
 
     val mediaGroup = MediaGroup(
-        data = "data",
+        day = "data",
         mediaFiles = listOf(mediaFile)
     )
 }

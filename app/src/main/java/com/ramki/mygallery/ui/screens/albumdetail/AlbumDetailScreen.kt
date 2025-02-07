@@ -32,10 +32,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.toRoute
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ramki.mygallery.data.model.MediaGroup
@@ -66,7 +63,7 @@ fun AlbumDetailScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AlbumDetailContent(
+fun AlbumDetailContent(
     name: String,
     pagingItems: LazyPagingItems<MediaGroup>,
     onBackClick: () -> Unit
@@ -115,7 +112,7 @@ private fun AlbumItems(mediaGroup: MediaGroup) {
         configuration.screenWidthDp.dp / 4.3f
     }
 
-    Text(text = mediaGroup.data)
+    Text(text = mediaGroup.day)
 
     FlowRow(
         modifier = Modifier

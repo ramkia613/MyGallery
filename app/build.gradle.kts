@@ -18,8 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner = "com.ramki.mygallery.HiltTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -38,12 +37,6 @@ android {
     buildFeatures {
         compose = true
     }
-
-//    sourceSets {
-//        getByName("androidTest") {
-//            java.srcDirs("src/androidTest/java")
-//        }
-//    }
 
     testOptions {
         unitTests {
@@ -90,10 +83,6 @@ dependencies {
     testImplementation(libs.turbine)
     testImplementation(libs.ui.test.junit4.android)
     testImplementation(libs.kotlinx.coroutines.test)
-
-    androidTestImplementation(libs.hilt.android.testing)
-    kspAndroidTest(libs.hilt.android.compiler)
-
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.androidx.espresso.core)

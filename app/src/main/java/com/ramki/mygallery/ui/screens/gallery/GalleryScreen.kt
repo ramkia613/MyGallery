@@ -2,13 +2,9 @@ package com.ramki.mygallery.ui.screens.gallery
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,7 +25,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -42,7 +37,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ramki.mygallery.R
 import com.ramki.mygallery.data.model.Album
 import com.ramki.mygallery.data.model.MediaType
-import com.ramki.mygallery.ui.screens.gallery.component.GalleryImage
+import com.ramki.mygallery.ui.screens.gallery.component.AlbumGridItem
+import com.ramki.mygallery.ui.screens.gallery.component.AlbumListItem
 import com.ramki.mygallery.utils.PermissionHandler
 
 @Composable
@@ -149,25 +145,6 @@ fun AlbumGrid(
     }
 }
 
-@Composable
-fun AlbumGridItem(
-    album: Album,
-    onItemClick: (Album) -> Unit
-) {
-    Column(
-        modifier = Modifier.clickable { onItemClick(album) },
-    ) {
-        GalleryImage(
-            modifier = Modifier
-                .fillMaxSize(),
-            path = album.thumbnailPath,
-        )
-        Spacer(modifier = Modifier.size(8.dp))
-
-        Text(text = album.name)
-        Text(text = "${album.mediaCount} items")
-    }
-}
 
 @Composable
 fun AlbumList(
@@ -184,36 +161,6 @@ fun AlbumList(
         items(albums, key = { it.name }) {
             AlbumListItem(it, onItemClick)
             Spacer(modifier = Modifier.size(8.dp))
-        }
-    }
-}
-
-@Composable
-fun AlbumListItem(
-    album: Album,
-    onItemClick: (Album) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .clickable { onItemClick(album) },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        GalleryImage(
-            modifier = Modifier.size(64.dp),
-            path = album.thumbnailPath,
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(start = 16.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = album.name)
-
-            Spacer(modifier = Modifier.size(4.dp))
-
-            Text(text = "${album.mediaCount} items")
         }
     }
 }

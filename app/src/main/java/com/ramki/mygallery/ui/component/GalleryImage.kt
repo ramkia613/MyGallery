@@ -1,4 +1,4 @@
-package com.ramki.mygallery.ui.screens.gallery.component
+package com.ramki.mygallery.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.aspectRatio

@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -31,22 +32,30 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.toRoute
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ramki.mygallery.data.model.MediaGroup
 import com.ramki.mygallery.data.model.MediaType
 import com.ramki.mygallery.extention.getDuration
+import com.ramki.mygallery.navigation.AppDestination
 import com.ramki.mygallery.ui.screens.gallery.component.GalleryImage
 
 @Composable
 fun AlbumDetailScreen(
     viewModel: AlbumDetailViewModel = hiltViewModel(),
+    albumDetail: AppDestination.AlbumDetail,
     onBackClick: () -> Unit
 ) {
     val name = viewModel.name.collectAsStateWithLifecycle().value
     val pagingItems = viewModel.mediaGroup.collectAsLazyPagingItems()
 
+    LaunchedEffect(Unit) {
+        viewModel.getAlbumMedia(albumDetail)
+    }
     AlbumDetailContent(
         name = name,
         pagingItems = pagingItems,

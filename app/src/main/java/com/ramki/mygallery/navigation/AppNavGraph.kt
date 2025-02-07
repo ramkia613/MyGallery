@@ -3,6 +3,7 @@ package com.ramki.mygallery.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
+import androidx.navigation.toRoute
 import com.ramki.mygallery.ui.screens.albumdetail.AlbumDetailScreen
 import com.ramki.mygallery.ui.screens.gallery.GalleryScreen
 import com.ramki.mygallery.ui.screens.permission.PermissionScreen
@@ -49,7 +50,9 @@ fun AppNavGraph(
         }
 
         composable<AppDestination.AlbumDetail> {
+            val albumDetail = it.toRoute<AppDestination.AlbumDetail>()
             AlbumDetailScreen(
+                albumDetail = albumDetail,
                 onBackClick = {
                     navController.popBackStack()
                 }
